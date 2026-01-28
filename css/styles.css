@@ -273,6 +273,28 @@ h3 {
     text-decoration: none;
 }
 
+/* Language Toggle Button */
+.btn-lang {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-sm);
+    z-index: 10;
+}
+
+.btn-lang:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent-primary);
+}
+
+.welcome-content {
+    position: relative;
+}
+
 .btn-primary {
     background: var(--accent-gradient);
     color: white;

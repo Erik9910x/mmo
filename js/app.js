@@ -202,6 +202,118 @@ const App = {
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
+    updateLanguageUI(); // Initialize language display
 });
 
+// Global language toggle function
+function toggleLanguage() {
+    const newLang = i18n.toggle();
+    updateLanguageUI();
+    UI.showToast(newLang === 'vi' ? 'Đã đổi sang Tiếng Việt' : 'Switched to English', 'info', '🌐');
+
+    // Re-render dynamic content
+    UI.renderPathsGrid();
+    UI.renderLeaderboard();
+}
+
+// Update all UI text based on current language
+function updateLanguageUI() {
+    const lang = i18n.getLang();
+    const langDisplay = lang.toUpperCase();
+
+    // Update language toggle buttons
+    const welcomeLangSpan = document.getElementById('current-lang-welcome');
+    if (welcomeLangSpan) welcomeLangSpan.textContent = langDisplay;
+
+    // Update welcome screen
+    const welcomeSubtitle = document.querySelector('.welcome-subtitle');
+    if (welcomeSubtitle) welcomeSubtitle.textContent = i18n.t('welcome_subtitle');
+
+    const welcomeDesc = document.querySelector('.welcome-description');
+    if (welcomeDesc) welcomeDesc.textContent = i18n.t('welcome_description');
+
+    const startBtn = document.getElementById('start-btn');
+    if (startBtn) startBtn.innerHTML = i18n.t('start_challenge') + ' →';
+
+    const welcomeNote = document.querySelector('.welcome-note');
+    if (welcomeNote) welcomeNote.textContent = i18n.t('simulation_note');
+
+    // Update challenge preview
+    const challengeItems = document.querySelectorAll('.challenge-item span:not(.challenge-icon)');
+    const challengeLabels = ['Limited Time', 'Manage Energy', 'Score Points', 'Fail Conditions'];
+    const challengeLabelsVI = ['Thời Gian Giới Hạn', 'Quản Lý Năng Lượng', 'Tính Điểm', 'Điều Kiện Thất Bại'];
+    challengeItems.forEach((item, idx) => {
+        item.textContent = lang === 'vi' ? challengeLabelsVI[idx] : challengeLabels[idx];
+    });
+
+    // Update disclaimer modal
+    const disclaimerTitle = document.querySelector('.disclaimer-content h2');
+    if (disclaimerTitle) disclaimerTitle.textContent = i18n.t('disclaimer_title');
+
+    const disclaimerText = document.querySelector('.disclaimer-text');
+    if (disclaimerText) disclaimerText.innerHTML = i18n.t('disclaimer_text');
+
+    const acceptBtn = document.getElementById('accept-disclaimer-btn');
+    if (acceptBtn) acceptBtn.textContent = i18n.t('understand_start');
+
+    // Update dashboard labels
+    const balanceLabel = document.querySelector('.balance-label');
+    if (balanceLabel) balanceLabel.textContent = i18n.t('balance');
+
+    // Update stat labels
+    const statLabels = {
+        'Strategy Score': i18n.t('strategy_score'),
+        'Risk Score': i18n.t('risk_score'),
+        'Total Profit': i18n.t('total_profit'),
+        'Total Loss': i18n.t('total_loss'),
+        'Decisions': i18n.t('actions'),
+        'Best Trade': lang === 'vi' ? 'Giao Dịch Tốt Nhất' : 'Best Trade'
+    };
+
+    document.querySelectorAll('.stat-label').forEach(label => {
+        const key = label.textContent;
+        if (statLabels[key]) label.textContent = statLabels[key];
+    });
+
+    // Update section titles
+    const pathsTitle = document.querySelector('.paths-section .section-title');
+    if (pathsTitle) pathsTitle.textContent = '🎯 ' + (lang === 'vi' ? 'Thử Thách MMO' : 'MMO Challenges');
+
+    const pathsSubtitle = document.querySelector('.section-subtitle');
+    if (pathsSubtitle) pathsSubtitle.textContent = i18n.t('path_subtitle');
+
+    const historyTitle = document.querySelector('.history-section .section-title');
+    if (historyTitle) historyTitle.textContent = lang === 'vi' ? 'Nhật Ký Quyết Định' : 'Decision Log';
+
+    const leaderboardTitle = document.querySelector('.leaderboard-section .section-title');
+    if (leaderboardTitle) leaderboardTitle.textContent = '🏆 ' + i18n.t('leaderboard');
+
+    // Update buttons
+    const advanceDayBtn = document.getElementById('advance-day-btn');
+    if (advanceDayBtn) advanceDayBtn.textContent = lang === 'vi' ? 'Ngày Tiếp →' : 'Next Day →';
+
+    const endSessionBtn = document.getElementById('end-session-btn');
+    if (endSessionBtn) endSessionBtn.textContent = i18n.t('end_session');
+
+    // Update resource labels
+    const energyLabel = document.querySelector('.resource-label');
+    if (energyLabel && energyLabel.textContent.includes('Energy')) {
+        energyLabel.innerHTML = '⚡ ' + i18n.t('energy');
+    }
+
+    document.querySelectorAll('.resource-label').forEach(label => {
+        if (label.textContent.includes('Stress') || label.textContent.includes('Căng')) {
+            label.innerHTML = '😰 ' + i18n.t('stress');
+        } else if (label.textContent.includes('Energy') || label.textContent.includes('Năng')) {
+            label.innerHTML = '⚡ ' + i18n.t('energy');
+        }
+    });
+
+    // Update chart title
+    const chartTitle = document.querySelector('.chart-container h3');
+    if (chartTitle) chartTitle.textContent = lang === 'vi' ? 'Lịch Sử Số Dư' : 'Balance History';
+}
+
 window.App = App;
+window.toggleLanguage = toggleLanguage;
+window.updateLanguageUI = updateLanguageUI;

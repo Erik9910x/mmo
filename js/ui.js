@@ -206,49 +206,61 @@ const UI = {
         if (!grid) return;
 
         const state = GameState.state;
+        const lang = typeof i18n !== 'undefined' ? i18n.getLang() : 'en';
 
         const paths = [
             {
                 id: 'freelance',
                 icon: '💼',
-                title: 'Freelance Challenge',
-                description: 'Manage your time and reputation. Complete jobs before running out of hours!',
+                title: lang === 'vi' ? 'Thử Thách Freelance' : 'Freelance Challenge',
+                description: lang === 'vi'
+                    ? 'Quản lý thời gian và uy tín. Hoàn thành việc trước khi hết giờ!'
+                    : 'Manage your time and reputation. Complete jobs before running out of hours!',
                 risk: 'medium',
-                riskLabel: 'Time & Skill Challenge',
-                resources: `${state.freelance.timeRemaining}h remaining`,
+                riskLabel: lang === 'vi' ? 'Thử Thách Thời Gian & Kỹ Năng' : 'Time & Skill Challenge',
+                resources: lang === 'vi' ? `${state.freelance.timeRemaining}h còn lại` : `${state.freelance.timeRemaining}h remaining`,
                 failed: state.freelance.failed
             },
             {
                 id: 'affiliate',
                 icon: '📈',
-                title: 'Affiliate Challenge',
-                description: 'Build traffic before deadline. Limited daily actions, patience required.',
+                title: lang === 'vi' ? 'Thử Thách Tiếp Thị' : 'Affiliate Challenge',
+                description: lang === 'vi'
+                    ? 'Xây dựng traffic trước hạn chót. Hành động giới hạn, cần kiên nhẫn.'
+                    : 'Build traffic before deadline. Limited daily actions, patience required.',
                 risk: 'medium',
-                riskLabel: 'Growth & Patience Challenge',
-                resources: `${state.affiliate.actionsToday} actions left today`,
+                riskLabel: lang === 'vi' ? 'Thử Thách Tăng Trưởng & Kiên Nhẫn' : 'Growth & Patience Challenge',
+                resources: lang === 'vi' ? `${state.affiliate.actionsToday} hành động hôm nay` : `${state.affiliate.actionsToday} actions left today`,
                 failed: state.affiliate.failed
             },
             {
                 id: 'dropshipping',
                 icon: '📦',
-                title: 'Dropshipping Challenge',
-                description: 'Limited ad attempts. Choose wisely between safe and risky products.',
+                title: lang === 'vi' ? 'Thử Thách Dropship' : 'Dropshipping Challenge',
+                description: lang === 'vi'
+                    ? 'Số lần quảng cáo giới hạn. Chọn giữa sản phẩm an toàn và rủi ro.'
+                    : 'Limited ad attempts. Choose wisely between safe and risky products.',
                 risk: 'high',
-                riskLabel: 'Capital & Decision Challenge',
-                resources: `${state.dropshipping.adAttempts} attempts left`,
+                riskLabel: lang === 'vi' ? 'Thử Thách Vốn & Quyết Định' : 'Capital & Decision Challenge',
+                resources: lang === 'vi' ? `${state.dropshipping.adAttempts} lần còn lại` : `${state.dropshipping.adAttempts} attempts left`,
                 failed: state.dropshipping.failed
             },
             {
                 id: 'trading',
                 icon: '📊',
-                title: 'Trading Challenge',
-                description: 'Limited trades and strict risk rules. Break them and face consequences.',
+                title: lang === 'vi' ? 'Thử Thách Giao Dịch' : 'Trading Challenge',
+                description: lang === 'vi'
+                    ? 'Số giao dịch và quy tắc rủi ro nghiêm ngặt. Vi phạm sẽ có hậu quả.'
+                    : 'Limited trades and strict risk rules. Break them and face consequences.',
                 risk: 'high',
-                riskLabel: 'Discipline Challenge',
-                resources: `${state.trading.tradesRemaining} trades left`,
+                riskLabel: lang === 'vi' ? 'Thử Thách Kỷ Luật' : 'Discipline Challenge',
+                resources: lang === 'vi' ? `${state.trading.tradesRemaining} giao dịch còn lại` : `${state.trading.tradesRemaining} trades left`,
                 failed: state.trading.failed
             }
         ];
+
+        const startLabel = lang === 'vi' ? 'Bắt Đầu' : 'Start Challenge';
+        const failedLabel = lang === 'vi' ? 'Thất Bại' : 'Failed';
 
         grid.innerHTML = paths.map(p => `
             <div class="path-card ${p.failed ? 'failed' : ''}" data-path="${p.id}">
@@ -262,7 +274,7 @@ const UI = {
                     <span class="resource-indicator">${p.resources}</span>
                 </div>
                 <button class="btn btn-path" ${p.failed ? 'disabled' : ''}>
-                    ${p.failed ? 'Failed' : 'Start Challenge'}
+                    ${p.failed ? failedLabel : startLabel}
                 </button>
             </div>
         `).join('');

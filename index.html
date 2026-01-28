@@ -19,6 +19,11 @@
     <section id="welcome-screen" class="screen active">
         <div class="welcome-container">
             <div class="welcome-content">
+                <!-- Language Toggle -->
+                <button id="lang-toggle-welcome" class="btn btn-lang" onclick="toggleLanguage()">
+                    🌐 <span id="current-lang-welcome">EN</span>
+                </button>
+
                 <div class="logo-container">
                     <div class="logo-icon">🎯</div>
                     <h1 class="logo-text">MMO <span class="gradient-text">Challenge</span></h1>
@@ -88,9 +93,12 @@
                 </div>
             </div>
             <div class="header-right">
+                <button id="lang-toggle-dash" class="btn btn-icon" title="Language"
+                    onclick="toggleLanguage()">🌐</button>
                 <button id="achievements-btn" class="btn btn-icon" title="Achievements">🏆</button>
-                <button id="advance-day-btn" class="btn btn-secondary">Next Day →</button>
-                <button id="end-session-btn" class="btn btn-danger-outline">End Challenge</button>
+                <button id="advance-day-btn" class="btn btn-secondary" data-i18n="next_day">Next Day →</button>
+                <button id="end-session-btn" class="btn btn-danger-outline" data-i18n="end_session">End
+                    Challenge</button>
             </div>
         </header>
 
@@ -198,6 +206,7 @@
     <div id="toast-container" class="toast-container"></div>
 
     <!-- Scripts -->
+    <script src="js/utils/i18n.js"></script>
     <script src="js/utils/random.js"></script>
     <script src="js/utils/achievements.js"></script>
     <script src="js/state.js"></script>
