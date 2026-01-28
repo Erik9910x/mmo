@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="MMO Experience: Challenge yourself with simulated online income paths. Learn decision-making under pressure.">
+    <title>MMO Experience - Decision Under Pressure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Welcome Screen -->
+    <section id="welcome-screen" class="screen active">
+        <div class="welcome-container">
+            <div class="welcome-content">
+                <div class="logo-container">
+                    <div class="logo-icon">🎯</div>
+                    <h1 class="logo-text">MMO <span class="gradient-text">Challenge</span></h1>
+                </div>
+                <p class="welcome-subtitle">Decision Under Pressure</p>
+                <p class="welcome-description">
+                    MMO is not clicking buttons – it's making decisions under pressure.
+                    Complete challenges, manage limited resources, and survive the consequences.
+                </p>
+
+                <div class="challenge-preview">
+                    <div class="challenge-item">
+                        <span class="challenge-icon">⏱️</span>
+                        <span>Limited Time</span>
+                    </div>
+                    <div class="challenge-item">
+                        <span class="challenge-icon">⚡</span>
+                        <span>Manage Energy</span>
+                    </div>
+                    <div class="challenge-item">
+                        <span class="challenge-icon">🎯</span>
+                        <span>Score Points</span>
+                    </div>
+                    <div class="challenge-item">
+                        <span class="challenge-icon">💀</span>
+                        <span>Fail Conditions</span>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="btn btn-primary btn-large">Start Challenge →</button>
+                <p class="welcome-note">No login required • 5-10 minute challenge</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer Modal -->
+    <div id="disclaimer-modal" class="modal">
+        <div class="modal-content disclaimer-content">
+            <div class="disclaimer-icon">⚠️</div>
+            <h2>Educational Challenge</h2>
+            <p class="disclaimer-text">This is a <strong>simulation for educational purposes only</strong>. No real
+                money is involved.</p>
+            <div class="challenge-rules">
+                <h4>Challenge Rules:</h4>
+                <ul>
+                    <li>🎯 Complete objectives within resource limits</li>
+                    <li>⚡ Energy depletes with each action</li>
+                    <li>😰 Stress increases mistake probability</li>
+                    <li>💀 Fail conditions end your challenge</li>
+                </ul>
+            </div>
+            <button id="accept-disclaimer-btn" class="btn btn-primary">Accept Challenge</button>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <section id="dashboard-screen" class="screen">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1 class="header-logo">MMO <span class="gradient-text">Challenge</span></h1>
+                <span id="current-day" class="day-display">Day 1 / 7</span>
+            </div>
+            <div class="header-center">
+                <div class="balance-display">
+                    <span class="balance-label">Virtual Balance</span>
+                    <span id="balance-amount" class="balance-amount">$1,000</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="achievements-btn" class="btn btn-icon" title="Achievements">🏆</button>
+                <button id="advance-day-btn" class="btn btn-secondary">Next Day →</button>
+                <button id="end-session-btn" class="btn btn-danger-outline">End Challenge</button>
+            </div>
+        </header>
+
+        <!-- Resource Bars -->
+        <div class="resources-bar">
+            <div class="resource-item">
+                <div class="resource-header">
+                    <span class="resource-label">⚡ Energy</span>
+                    <span id="energy-text" class="resource-value">100%</span>
+                </div>
+                <div class="resource-bar-container">
+                    <div id="energy-bar" class="resource-fill good" style="width: 100%"></div>
+                </div>
+            </div>
+            <div class="resource-item">
+                <div class="resource-header">
+                    <span class="resource-label">😰 Stress</span>
+                    <span id="stress-text" class="resource-value">0%</span>
+                </div>
+                <div class="resource-bar-container">
+                    <div id="stress-bar" class="resource-fill good" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <main class="dashboard-main">
+            <!-- Score Overview -->
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-label">Strategy Score</span>
+                    <span id="strategy-score" class="stat-value">50/100</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Risk Score</span>
+                    <span id="risk-score" class="stat-value">50/100</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Profit</span>
+                    <span id="total-profit" class="stat-value positive">$0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Loss</span>
+                    <span id="total-loss" class="stat-value negative">$0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Decisions</span>
+                    <span id="actions-count" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Best Trade</span>
+                    <span id="best-trade" class="stat-value">-</span>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <div class="chart-container">
+                    <h3>Balance History</h3>
+                    <canvas id="balance-chart"></canvas>
+                </div>
+            </div>
+
+            <div class="paths-section">
+                <h2 class="section-title">🎯 MMO Challenges</h2>
+                <p class="section-subtitle">Each path has limited resources and fail conditions. Choose wisely.</p>
+                <div class="paths-grid" id="paths-grid"></div>
+            </div>
+
+            <div class="history-section">
+                <h2 class="section-title">Decision Log</h2>
+                <div id="transaction-list" class="transaction-list">
+                    <div class="empty-state">
+                        <p>No decisions yet. Start a challenge!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaderboard-section">
+                <h2 class="section-title">🏆 Strategy Leaderboard</h2>
+                <div id="leaderboard-list" class="leaderboard-list"></div>
+            </div>
+        </main>
+    </section>
+
+    <!-- Module Screens -->
+    <section id="freelance-screen" class="screen module-screen"></section>
+    <section id="affiliate-screen" class="screen module-screen"></section>
+    <section id="dropshipping-screen" class="screen module-screen"></section>
+    <section id="trading-screen" class="screen module-screen"></section>
+
+    <!-- Achievements Modal -->
+    <div id="achievements-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h2>🏆 Challenge Badges</h2>
+            <div id="achievements-list" class="achievements-list"></div>
+        </div>
+    </div>
+
+    <!-- Result Modal -->
+    <div id="result-modal" class="modal">
+        <div class="modal-content result-content"></div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="js/utils/random.js"></script>
+    <script src="js/utils/achievements.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/paths/freelance.js"></script>
+    <script src="js/paths/affiliate.js"></script>
+    <script src="js/paths/dropshipping.js"></script>
+    <script src="js/paths/trading.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
